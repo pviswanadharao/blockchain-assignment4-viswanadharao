@@ -1,12 +1,12 @@
 # Activity 3 — Build, Deploy & Operate a Production-Style ERC-20 on DIDLab
 
-## 📌 Overview
+## Overview
 This repository contains my implementation for **Activity 3** of the Blockchain lab.  
 The activity involved scaffolding a Hardhat v3 project, writing a gas-aware ERC-20 token contract, deploying it to a local DIDLab network, and interacting with it using scripts and MetaMask.  
 
 ---
 
-## 🛠️ Steps Completed
+## Steps Completed
 
 ### 1. Project Setup
 - Initialized a Hardhat v3 project with **Viem** and **TypeScript**.
@@ -70,7 +70,7 @@ The activity involved scaffolding a Hardhat v3 project, writing a gas-aware ERC-
 
 ---
 
-## 📷 Screenshots (to be added)
+## Screenshots (to be added)
 - [ ] MetaMask with **Local DIDLab network**.
 - [ ] MetaMask showing **CAMP token** balance.
 - [ ] Console output of **airdrop.ts** (batch vs singles).
@@ -78,7 +78,7 @@ The activity involved scaffolding a Hardhat v3 project, writing a gas-aware ERC-
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 contracts/
   CampusCreditV2.sol
 scripts/
@@ -94,7 +94,7 @@ README.md
 
 ---
 
-## 📝 Notes
+## Notes
 - Used Node.js v22.x (required by Hardhat v3).
 - Excluded `.env` from GitHub for security.
 - All tests run successfully on local DIDLab chain.
