@@ -61,7 +61,7 @@ The activity involved scaffolding a Hardhat v3 project, writing a gas-aware ERC-
 
 ---
 
-## 📊 Results & Learnings
+## Results & Learnings
 - **ERC-20 Cap + Pausable + Roles** implemented correctly.
 - **Gas-aware batch airdrop** showed measurable gas savings (~14.87%).
 - Verified **transfer, approve, allowance** workflows.
