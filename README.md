@@ -99,3 +99,31 @@ README.md
 - Excluded `.env` from GitHub for security.
 - All tests run successfully on local DIDLab chain.
 
+
+---
+
+##  Assignment 3 Submission Deliverables
+
+### Token Deployment Info
+- **TOKEN_ADDRESS**: `0x5fbdb2315678afecb367f032d93f642f64180aa3`  
+- **Deploy Block**: `1`  
+- **Roles Granted**:  
+  - `DEFAULT_ADMIN_ROLE` → Deployer account (`0xf39f…92266`)  
+  - `MINTER_ROLE` → Deployer account (`0xf39f…92266`)  
+  - `PAUSER_ROLE` → Deployer account (`0xf39f…92266`)  
+- **Cap**: `2,000,000 CAMP`
+
+### Screenshots
+- MetaMask with **Local DIDLab** network  
+- MetaMask showing **CAMP token**  
+- Console output of **airdrop.ts** (batch vs singles gas)  
+- Console output of **transfer-approve.ts**
+
+### Gas-aware Airdrop Note
+The **batch airdrop** is gas-efficient because:  
+- Uses **custom errors** (`CapExceeded`, `ArrayLengthMismatch`)  
+- Uses **unchecked loops** for lower gas  
+- Reduces calldata + amortizes gas across a single transaction instead of multiple transfers  
+- Result: ~**14.87% gas savings** compared to single transfers.
+
+
