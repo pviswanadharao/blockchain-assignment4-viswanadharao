@@ -1,0 +1,5 @@
+Before | Me: 1000000 CAMP | You: 1000000 CAMP
+transfer tx: 0xa02d7f389669e28a99f58efbbd641725e3ecf1f9babcfa16a2f5673ce9f37ee7 gasUsed: 29224
+approve tx: 0xc15ba48d2f2973f7e894b7d7e02507855c57d09b8e0c4144adcbd76d1b7762ff gasUsed: 46409
+allowance: 50 CAMP
+After | Me: 1000000 CAMP | You: 1000000 CAMP

@@ -1,0 +1,3 @@
+Airdrop: 0x3c001c6ef40ac8d36c595eb4d8f58f70c3633790871f74e0bf11a75e3207d756 gasUsed: 118879 fee(wei): 308258220659602
+Singles total gasUsed: 139636 fee(wei): 338655684988868
+Batch saved ≈ 14.87% gas vs singles

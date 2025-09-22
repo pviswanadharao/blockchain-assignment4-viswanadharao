@@ -1,0 +1,4 @@
+ Deploying CampusCreditV2...
+Deploy tx hash: 0xa816ef9409d07dfc52274aaf761d751d0ed1c4da8df93ee57035db13d30b3452
+ Deployed at: 0x5fbdb2315678afecb367f032d93f642f64180aa3
+ Block: 1

@@ -1,0 +1,7 @@
+[1] RoleGranted { role: DEFAULT_ADMIN_ROLE, account: 0xf39F..., sender: 0xf39F... }
+[1] RoleGranted { role: MINTER_ROLE, account: 0xf39F..., sender: 0xf39F... }
+[1] RoleGranted { role: PAUSER_ROLE, account: 0xf39F..., sender: 0xf39F... }
+[1] Transfer { from: 0x0000..., to: 0xf39F..., value: 1000000 CAMP }
+[2] Transfer { from: 0xf39F..., to: 0xf39F..., value: 100 CAMP }
+[3] Approval { owner: 0xf39F..., spender: 0xf39F..., value: 50 CAMP }
+[4] Transfer { batch airdrop → recipients (0xf39F..., 0x7099..., 0x3C44..., 0x90F7...) 10 CAMP each }
