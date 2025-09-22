@@ -1,84 +1,40 @@
-# Activity 3 — Build, Deploy & Operate a Production-Style ERC-20 on DIDLab
+# Assignment 3 (Production-Style ERC-20 on DIDLab (Hardhat v3 + Viem)
 
 ## Overview
-This repository contains my implementation for **Activity 3** of the Blockchain lab.  
-The activity involved scaffolding a Hardhat v3 project, writing a gas-aware ERC-20 token contract, deploying it to a local DIDLab network, and interacting with it using scripts and MetaMask.  
+This repository contains my implementation for Activity 3 of the Blockchain Lab.
+The assignment required creating a production-style ERC-20 token on the DIDLab network using Hardhat v3, Viem, and OpenZeppelin v5, with features like capped supply, pausable transfers, role-based access control, and a gas-aware batch airdrop.
 
 ---
 
 ## Steps Completed
 
 ### 1. Project Setup
-- Initialized a Hardhat v3 project with **Viem** and **TypeScript**.
-- Installed dependencies: `hardhat`, `@openzeppelin/contracts`, `viem`, `dotenv`.
-- Created and configured `.env` for local Hardhat network (RPC, Chain ID, Private Key).
+-Environment
 
-### 2. Contract Implementation
-- Implemented **CampusCreditV2.sol** with:
-  - **Cap enforcement** on mint
-  - **Pausable** transfers
-  - **Role-based access** (ADMIN, MINTER, PAUSER)
-  - **Batch airdrop** (gas-aware, unchecked loops, custom errors)
-- Location: `contracts/CampusCreditV2.sol`.
+Node.js: v22.x
+Hardhat: v3 (ESM mode, "type": "module" in package.json)
+Client library: Viem
+Contracts: OpenZeppelin v5
+Network: DIDLab Team 10
+RPC URL: https://hh-10.didlab.org
+Chain ID: 31346
+Private key: Faucet key provided by professor (not real wallet)
 
-### 3. Deployment
-- Wrote deploy script (`scripts/deploy.ts`).
-- Deployed CampusCreditV2 to **local Hardhat blockchain**:
-- Added `TOKEN_ADDRESS` to `.env`.
+###Token Deployment Info
 
-### 4. Interactions
-- **Transfer & Approve (`scripts/transfer-approve.ts`)**
-- Successfully transferred `100 CAMP` and approved `50 CAMP`.
-- Console Output:
-  ```
-  Before | Me: 1000000 CAMP | You: 1000000 CAMP
-  transfer tx: 0xdf88b1... gasUsed: 29224
-  approve tx: 0xaac67a... gasUsed: 46409
-  allowance: 50 CAMP
-  After | Me: 1000000 CAMP | You: 1000000 CAMP
-  ```
+Token Name: CampusCredit
+Symbol: CAMP
+Cap: 2,000,000 CAMP
+Initial Mint: 1,000,000 CAMP
+Deployment Output:
+TOKEN_ADDRESS: 0x5fbdb2315678afecb367f032d93f642f64180aa3
+Deploy Block: 1
+Roles Granted:
+DEFAULT_ADMIN_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+MINTER_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+PAUSER_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
-- **Batch Airdrop (`scripts/airdrop.ts`)**
-- Performed a batch airdrop of `10 CAMP`.
-- Gas comparison output:
-  ```
-  Airdrop: ... gasUsed: 118879
-  Singles total gasUsed: 139636
-  Batch saved ≈ 14.87% gas vs singles
-  ```
-
-- **Logs & Events (`scripts/logs-query.ts`)**
-- Queried logs for `Transfer`, `Approval`, and `RoleGranted`.
-- Verified deployment, transfers, approvals, and airdrop events.
-
-### 5. MetaMask Integration
-- Added **Local DIDLab** network:
-- RPC URL: `http://127.0.0.1:8545`
-- Chain ID: `31337`
-- Currency Symbol: ETH
-- Imported deployer account (private key from Hardhat node).
-- Imported CAMP token manually using `TOKEN_ADDRESS`.
-
----
-
-## Results & Learnings
-- **ERC-20 Cap + Pausable + Roles** implemented correctly.
-- **Gas-aware batch airdrop** showed measurable gas savings (~14.87%).
-- Verified **transfer, approve, allowance** workflows.
-- Confirmed all events in logs (`Transfer`, `Approval`, `RoleGranted`).
-- MetaMask successfully connected to local DIDLab and CAMP token added.
-
----
-
-## Screenshots (to be added)
-- [ ] MetaMask with **Local DIDLab network**.
-- [ ] MetaMask showing **CAMP token** balance.
-- [ ] Console output of **airdrop.ts** (batch vs singles).
-- [ ] Console output of **transfer-approve.ts**.
-
----
-
-## Project Structure
+###Project Structure
 contracts/
   CampusCreditV2.sol
 scripts/
@@ -89,41 +45,58 @@ scripts/
 hardhat.config.ts
 .env.example
 README.md
+ConsoleOutputs/
+Screenshots/
+
+Scripts & Outputs
+
+1. Deploy (scripts/deploy.ts)
+Deploys the ERC-20 contract using .env parameters.
+Console output includes: deploy tx hash, contract address, block number.
+
+2. Transfer & Approve (scripts/transfer-approve.ts)
+Prints balances (before/after) for two accounts.
+Executes transfer and approve, then shows allowance.
+Console output includes: tx hash, gas used, balances before/after, allowance.
+
+3. Batch Airdrop vs Singles (scripts/airdrop.ts)
+Performs batch airdrop and equivalent N single transfers.
+Prints gas used for both and % gas saved.
+
+Sample Output:
+Airdrop: ... gasUsed: 118879
+Singles total gasUsed: 139636
+Batch saved ≈ 14.87% gas vs singles
 
 
+Logs & Events (scripts/logs-query.ts)
+Queries last ~2000 blocks for Transfer, Approval, and RoleGranted events.
+Prints block numbers + arguments for each event.
 
----
+MetaMask Integration
+Custom Network:
+Network Name: DIDLab Team 10
+RPC URL: https://hh-10.didlab.org
+Chain ID: 31346
+Currency Symbol: ETH
+Imported Faucet Account using provided private key.
+Imported CAMP Token using deployed TOKEN_ADDRESS.
+Sent CAMP transfer in MetaMask, transaction hash recorded.
 
-## Notes
-- Used Node.js v22.x (required by Hardhat v3).
-- Excluded `.env` from GitHub for security.
-- All tests run successfully on local DIDLab chain.
+Gas-aware Airdrop Note
+The batch airdrop implementation is more efficient than multiple single transfers because:
+Uses custom errors (CapExceeded, ArrayLengthMismatch) instead of generic reverts.
+Uses unchecked loops to save gas
+Reduces calldata and amortizes transaction overhead into a single tx.
+Achieved ~14.87% gas savings in tests.
 
+(Screenshots)
+Custom DIDLab Team 10 network in MetaMask.
+CAMP token imported with balance visible.
+CAMP transfer tx details page (hash shown).
+Console outputs for Deploy, Transfer+Approve, Airdrop, Logs (saved in ConsoleOutputs/).
 
----
-
-##  Assignment 3 Submission Deliverables
-
-### Token Deployment Info
-- **TOKEN_ADDRESS**: `0x5fbdb2315678afecb367f032d93f642f64180aa3`  
-- **Deploy Block**: `1`  
-- **Roles Granted**:  
-  - `DEFAULT_ADMIN_ROLE` → Deployer account (`0xf39f…92266`)  
-  - `MINTER_ROLE` → Deployer account (`0xf39f…92266`)  
-  - `PAUSER_ROLE` → Deployer account (`0xf39f…92266`)  
-- **Cap**: `2,000,000 CAMP`
-
-### Screenshots
-- MetaMask with **Local DIDLab** network  
-- MetaMask showing **CAMP token**  
-- Console output of **airdrop.ts** (batch vs singles gas)  
-- Console output of **transfer-approve.ts**
-
-### Gas-aware Airdrop Note
-The **batch airdrop** is gas-efficient because:  
-- Uses **custom errors** (`CapExceeded`, `ArrayLengthMismatch`)  
-- Uses **unchecked loops** for lower gas  
-- Reduces calldata + amortizes gas across a single transaction instead of multiple transfers  
-- Result: ~**14.87% gas savings** compared to single transfers.
-
-
+Notes
+.env is excluded from GitHub for security (only .env.example included).
+Used Node.js v22.x as required.
+All requirements (cap enforcement, pausable transfers, role gating, airdrop revert reasons) tested successfully.
