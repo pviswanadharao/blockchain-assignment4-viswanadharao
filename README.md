@@ -1,6 +1,6 @@
 
 
-````markdown
+
 # DIDLab Assignment 4 — Minimal ERC-20 DApp UI
 
 ## Narrative
@@ -97,24 +97,13 @@ You must run the DApp using a local server.
 
 Choose one of the following options:
 
-#### Option A: Python (recommended)
+
 
 ```bash
 python3 -m http.server 8000
 ```
 
-#### Option B: Node.js http-server
 
-If not installed:
-
-```bash
-npm install -g http-server
-```
-
-Then run:
-
-```bash
-npx http-server -p 8000
 ```
 
 You should see a message like:
