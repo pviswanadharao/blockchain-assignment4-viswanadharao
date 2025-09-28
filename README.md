@@ -15,6 +15,25 @@ The DApp was designed with usability in mind:
 - Transfer flow with detailed transaction logs.  
 - Optional ability to add the token to MetaMask for visibility.  
 
+  ### Short Note
+
+- During the development of this DApp, I added several safety and usability touches to improve the user experience:
+
+- Error Handling: The DApp logs clear error messages when a token address is invalid, when MetaMask is not available, or if the user forgets to enter an amount or recipient address.
+
+- Local Storage: The selected team number and token address are stored in localStorage so they persist across page reloads, reducing repetitive input.
+
+- Auto Balance Updates: The DApp watches for Transfer events and automatically refreshes the balance when the connected account is involved in a transfer.
+
+### Issues Encountered and Fixes
+
+- Invalid Teammate Address: At first, one of the teammate addresses copied from the faucet list showed as invalid. I confirmed the formatting and switched to a valid faucet account address to complete the transfer successfully.
+
+- Token Address Confusion: The address 0x5Fbdb… initially appeared in .env (default Hardhat local address). I clarified that the real DIDLab token address comes from the deployment in Activity 3 and updated the config to ensure the DApp points to the correct contract.
+
+- Browser Restrictions: Since browsers block import ... from when using the file:// protocol, I had to serve the DApp through a local HTTP server (Python http.server or npx http-server) to make the module imports work.
+
+These adjustments ensured the DApp worked reliably on the DIDLab Team 10 chain and provided a smoother user experience.
 ---
 
 ## Team Information
