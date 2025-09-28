@@ -1,102 +1,181 @@
-# Assignment 3 (Production-Style ERC-20 on DIDLab (Hardhat v3 + Viem)
+# DIDLab Activity 4 — ERC-20 DApp UI
 
-## Overview
-This repository contains my implementation for Activity 3 of the Blockchain Lab.
-The assignment required creating a production-style ERC-20 token on the DIDLab network using Hardhat v3, Viem, and OpenZeppelin v5, with features like capped supply, pausable transfers, role-based access control, and a gas-aware batch airdrop.
+## Team Information
+- **Team Number:** 10  
+- **Partner(s):** Priya Viswanadharao and Lahari  
 
 ---
 
-## Steps Completed
+## Network Configuration
+- **RPC URL:** `https://hh-10.didlab.org`  
+- **Chain ID (hex):** `0x7a72`  
+- **Chain ID (decimal):** `31346`  
 
-### 1. Project Setup
--Environment
+---
 
-Node.js: v22.x
-Hardhat: v3 (ESM mode, "type": "module" in package.json)
-Client library: Viem
-Contracts: OpenZeppelin v5
-Network: DIDLab Team 10
-RPC URL: https://hh-10.didlab.org
+## Token Details
+- **Token Name:** CampusCredit  
+- **Token Symbol:** CAMP  
+- **Decimals:** 18  
+- **Token Address:** `0x5Fbdb2315678afecb367f032d93F642f64180aa3`  
+
+---
+
+## Implementation Plan
+
+This activity builds a minimal **DApp user interface** to interact with our ERC-20 token deployed in Activity 3.  
+
+### Goals
+- Connect to MetaMask and switch to the DIDLab Team 10 network.  
+- Load ERC-20 token metadata (name, symbol, decimals).  
+- Show current account, network, token details, and balance.  
+- Transfer CAMP tokens to another account.  
+- Watch for transfer events and update balances automatically.  
+- Add CAMP token directly to MetaMask.  
+
+### Steps Completed
+1. Created a new folder `didlab-dapp` and added a single file `index.html`.  
+2. Configured the DApp with Team 10 RPC, Chain ID, and token address.  
+3. Tested the DApp with MetaMask:
+   - Connected & switched network.  
+   - Loaded CampusCredit (CAMP) token.  
+   - Performed transfer of **10 CAMP** to a teammate’s address.  
+   - Verified success in DApp log and MetaMask.  
+   - Added CAMP token to MetaMask for visibility.  
+
+---
+
+
+
+## How to Run (Step by Step)
+
+This section explains how **anyone** can run this project from scratch.
+
+### 1. Prerequisites
+Make sure you have the following installed:
+- **Node.js 22.x** (check with `node -v`).  
+- **Python 3.x** (for simple local server).  
+- **MetaMask extension** installed in your browser (Chrome/Firefox).  
+
+You will also need:
+- **DIDLab Team 10 network details** (provided above).  
+- **Token Address** from your `.env` or deployment logs.  
+
+---
+
+### 2. Clone the Repository
+Open a terminal and run:
+```bash
+git clone https://github.com/pviswanadharao/blockchain-activity4-viswanadharao.git
+cd blockchain-activity4-viswanadharao/didlab-dapp
+
+### 3.Start a Local Web Server
+
+Browsers do not allow ES Module imports (import ... from) directly over file://.
+You must serve the HTML using a local web server.
+
+Choose one of the following options:
+
+Option A: Using Python (recommended)
+
+If Python 3 is installed, run:
+
+npx http-server -p 8000
+
+If you don’t have it, install it globally first:
+
+npm install -g http-server
+
+You should see a message like:
+
+Serving HTTP on 0.0.0.0 port 8000 ...
+
+4. Open in Browser
+
+Go to:
+ou should see the DIDLab — ERC-20 DApp UI.
+
+5. Connect MetaMask
+
+Click the button “1) Connect & Switch Network”.
+
+MetaMask will ask permission to connect your account. Approve it.
+
+MetaMask will then prompt you to add/switch to DIDLab Team 10:
+
+RPC: https://hh-10.didlab.org
+
 Chain ID: 31346
-Private key: Faucet key provided by professor (not real wallet)
 
-###Token Deployment Info
-
-Token Name: CampusCredit
-Symbol: CAMP
-Cap: 2,000,000 CAMP
-Initial Mint: 1,000,000 CAMP
-Deployment Output:
-TOKEN_ADDRESS: 0x5fbdb2315678afecb367f032d93f642f64180aa3
-Deploy Block: 1
-Roles Granted:
-DEFAULT_ADMIN_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-MINTER_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-PAUSER_ROLE → 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-
-###Project Structure
-contracts/
-  CampusCreditV2.sol
-scripts/
-  deploy.ts
-  transfer-approve.ts
-  airdrop.ts
-  logs-query.ts
-hardhat.config.ts
-.env.example
-README.md
-ConsoleOutputs/
-Screenshots/
-
-Scripts & Outputs
-
-1. Deploy (scripts/deploy.ts)
-Deploys the ERC-20 contract using .env parameters.
-Console output includes: deploy tx hash, contract address, block number.
-
-2. Transfer & Approve (scripts/transfer-approve.ts)
-Prints balances (before/after) for two accounts.
-Executes transfer and approve, then shows allowance.
-Console output includes: tx hash, gas used, balances before/after, allowance.
-
-3. Batch Airdrop vs Singles (scripts/airdrop.ts)
-Performs batch airdrop and equivalent N single transfers.
-Prints gas used for both and % gas saved.
-
-Sample Output:
-Airdrop: ... gasUsed: 118879
-Singles total gasUsed: 139636
-Batch saved ≈ 14.87% gas vs singles
-
-
-Logs & Events (scripts/logs-query.ts)
-Queries last ~2000 blocks for Transfer, Approval, and RoleGranted events.
-Prints block numbers + arguments for each event.
-
-MetaMask Integration
-Custom Network:
-Network Name: DIDLab Team 10
-RPC URL: https://hh-10.didlab.org
-Chain ID: 31346
 Currency Symbol: ETH
-Imported Faucet Account using provided private key.
-Imported CAMP Token using deployed TOKEN_ADDRESS.
-Sent CAMP transfer in MetaMask, transaction hash recorded.
 
-Gas-aware Airdrop Note
-The batch airdrop implementation is more efficient than multiple single transfers because:
-Uses custom errors (CapExceeded, ArrayLengthMismatch) instead of generic reverts.
-Uses unchecked loops to save gas
-Reduces calldata and amortizes transaction overhead into a single tx.
-Achieved ~14.87% gas savings in tests.
+Approve both the add and switch prompts.
 
-(Screenshots)
-Custom DIDLab Team 10 network in MetaMask.
-CAMP token imported with balance visible.
-CAMP transfer tx details page (hash shown).
-Console outputs for Deploy, Transfer+Approve, Airdrop, Logs (saved in ConsoleOutputs/).
+The DApp will now display:
+
+Your account address.
+
+Network name and ID.
+
+Confirmation log “Connected. Network ready.”
+
+6. Load the Token
+
+In the Token Address field, paste your token address:
+    0x5Fbdb2315678afecb367f032d93F642f64180aa3
+
+    Click “2) Load Token”.
+
+    The DApp will display:
+
+        Token Name: CampusCredit
+
+        Symbol: CAMP
+
+        Decimals: 18
+
+        Token Address (confirmed)
+
+        Your CAMP balance
+
+7. Transfer Tokens
+
+    In the Recipient field, enter an Ethereum address (e.g., your teammate’s address or even your own for a self-transfer).
+
+    In the Amount field, enter the number of CAMP tokens (e.g., 10).
+
+    Click Send.
+
+    MetaMask will open a confirmation window → click Confirm.
+
+    Once the transaction is mined:
+
+        The DApp will log the transaction hash, block number, and gas used.
+
+        Your CAMP balance will update automatically.
+
+        8. Add Token to MetaMask
+
+Click the “Add Token to MetaMask” button.
+
+MetaMask will open a popup to add CAMP.
+
+Approve, and CAMP will now appear in your wallet with your balance.
+
+9. Verify Transfer in MetaMask
+
+Open MetaMask.
+
+Go to Activity tab.
+
+You should see the CAMP transfer you performed.
+
+The transaction hash can be cross-checked in the DApp logs.
 
 Notes
-.env is excluded from GitHub for security (only .env.example included).
-Used Node.js v22.x as required.
-All requirements (cap enforcement, pausable transfers, role gating, airdrop revert reasons) tested successfully.
+
+If Connect does nothing → check MetaMask is installed and you are not in private browsing mode.
+
+If Load Token shows “returned no data (0x)” → check that your token address is correct and deployed on DIDLab Team 10.
+
+If Insufficient funds error occurs → ensure you have CAMP tokens from your deployer account (import faucet key if needed).
